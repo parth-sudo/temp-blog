@@ -8,10 +8,9 @@ class CommentForm(forms.ModelForm):
     # name = forms.ChoiceField(choices = CHOICE)
     class Meta:
         model = Comment
-        # fields = ['name','body']
-        exclude = ["name"]
+        fields = ['body']
 
         widgets = {
-            'name' : forms.TextInput(attrs={'class' : 'form-control'}),
+            # 'name' : forms.TextInput(attrs={'class' : 'form-control'}),
             'body' : forms.Textarea(attrs={'class' : 'form-control'}),
         }

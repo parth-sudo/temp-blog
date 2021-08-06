@@ -1,9 +1,10 @@
 from django.shortcuts import render, redirect, get_object_or_404
+from django.urls.base import reverse_lazy
 from .models import Post, Comment
 from django.views.generic import ListView,DetailView,CreateView,UpdateView,DeleteView
 from django.contrib.auth.models import User
 from django.contrib.auth.mixins import LoginRequiredMixin,UserPassesTestMixin
-from django.http import HttpResponseRedirect
+from django.http import HttpResponseRedirect, HttpResponse
 from django.urls import reverse 
 from .forms import CommentForm
 # Create your views here.
@@ -26,19 +27,20 @@ def like_post(request, pk):
     else:
         post.likes.add(request.user)
         liked = True
-    
 
     return redirect('post-detail', pk)
+
 
 class CommentView(CreateView):
     model = Comment
     form = CommentForm
     template_name = 'blog/comment.html'
-    fields = ['name','body']
+    fields = ['body']
+
     def form_valid(self, form):
-        # candidate = form.save(commit=False)
-        # candidate.name = get_object_or_404(User, pk = 5)
-        # candidate.save()
+    
+        form.instance.writer = self.request.user
+        
         print(self.request.user)
         print(self.request.user.id)
         form.instance.post_id = self.kwargs['pk']
@@ -47,6 +49,20 @@ class CommentView(CreateView):
     def get_success_url(self):
          return reverse('post-detail', kwargs={'pk': self.kwargs['pk']})
 
+class CommentDeleteView(DeleteView):  # class based view to delete post.
+    model = Comment
+    success_url = '/'
+
+    def test_func(self):
+        comment = self.get_object()
+        if self.request.user == comment.writer:
+            return True
+        else:
+            return False
+
+    # def get_success_url(self):
+        
+    #     return redirect('post-detail/1')
 
 class PostListView(ListView):    #class based view.
   
@@ -89,7 +105,7 @@ class PostCreateView(LoginRequiredMixin, CreateView):  # class based view.
     fields = ['title', 'content']
 
     def form_valid(self, form):
-        form.instance.author = self.request.user #to form a post.
+        form.instance.author = self.request.user #to form a post by currently logged in user
         return super().form_valid(form)
 
 class PostUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):  # class based view.
