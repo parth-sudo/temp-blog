@@ -25,10 +25,10 @@
               {% csrf_token %}
 
               {% if liked %}
-                <button class="btn btn-secondary" type="submit" 
-              name="post_id" value="{{ post.id}}"> Unlike </button>
+                <button class="btn btn-primary" type="submit" 
+              name="post_id" value="{{ post.id}}"> Unlike 👎 </button>
               {% else %}
-                  <button class="btn btn-primary" type="submit" 
+                  <button class="btn btn-dark" type="submit" 
                 name="post_id" value="{{ post.id}}"> Like 👍 </button>
               {% endif %}
             </form>
@@ -70,7 +70,7 @@
                        
                         <form action="{% url 'comment_delete' comment.id %}" method="POST">
                             {% csrf_token %}
-                           <button class=" btn_outline_danger" type="submit" name="comment_id" value="{{comment.id}}"> Delete? </button>
+                           <button style="margin-left: 500px" class=" btn btn-danger" type="submit" name="comment_id" value="{{comment.id}}"> Delete</button>
                           </form> 
                      {% endif %}
                 <br><hr>

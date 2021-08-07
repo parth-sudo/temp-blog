@@ -2,6 +2,10 @@
 
  {% block content %} 
 
+ {% if user.is_authenticated %}
+  <h2 style = "color:#dvfjrf" class="mb-3"> <strong>  Welcome, {{ user }} 🙂 </strong></h2>
+ {% endif %}
+  <h4 style = "color:orange", class="mb-3"> Recent Activity 👀</h4>
   {% for post in posts %}
   <article class="media content-section">
     <img
@@ -24,11 +28,7 @@
       <div>
         {% if user.is_authenticated %}
          <p> <strong> {{post.total_likes}} Like(s) </strong> </p>
-        {% comment %} <form action="{% url 'like_post' %}" method="POST">
-          {% csrf_token %}
-          <button class="btn btn-primary" type="submit" 
-          name="post_id" value="{{ post.id}}"> Like </button>
-        </form> {% endcomment %}
+         <a class="btn btn-success" href="{% url 'post-detail' post.id %}"> Discuss</a>
 
         {% endif %}
       </div>
