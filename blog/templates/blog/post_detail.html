@@ -60,8 +60,10 @@
           </style>
            <div id = "bdr">
            {% for comment in post.comments.all %}
-         
+            
               <strong> {{comment.writer}} </strong>
+              <br>
+              <a href="{% url 'user-post' comment.writer %}"> View User </a>
               <br>
                 {{comment.body}} 
                       <br>
@@ -70,7 +72,7 @@
                        
                         <form action="{% url 'comment_delete' comment.id %}" method="POST">
                             {% csrf_token %}
-                           <button style="margin-left: 500px" class=" btn btn-danger" type="submit" name="comment_id" value="{{comment.id}}"> Delete</button>
+                           <button style="margin-left: 450px" class=" btn btn-danger" type="submit" name="comment_id" value="{{comment.id}}"> Delete (careful)</button>
                           </form> 
                      {% endif %}
                 <br><hr>

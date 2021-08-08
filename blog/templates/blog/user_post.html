@@ -3,11 +3,11 @@
   <article class="media content-section">
         <br></br>
           <img class="rounded-circle article-img" src="{{ user.profile.image.url }}">
-          <div class="media-body">
+          <div class="media-body" style="font-family:Comic Sans MS, cursive, sans-serif; color:#00315D">
 
-          <h4>  {{ user }}  </h4> 
-          <h4>  <strong>Bio</strong>: {{ user.profile.bio }}  </h4> 
-        
+           <h4 style="color:#003572;"> {{ user }}</h4> 
+          <h4>Bio- <h5 style="font-family:Comic Sans MS, cursive, sans-serif; color:#003572">{{ user.profile.bio }} </h5> </h4> 
+          <h4> Total Likes- {{likes}}</h4>
           </div>
         </article>
 

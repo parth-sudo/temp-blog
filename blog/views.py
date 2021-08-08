@@ -81,15 +81,19 @@ class UserPostListView(ListView):  # class based view.
 
     def get_queryset(self): #limit post to specific user.
         user = get_object_or_404(User, username= self.kwargs.get('username'))
-        print(user)
         return Post.objects.filter(author=user).order_by('-date_posted')
 
     def get_context_data(self, *args, **kwargs):
         context = super(UserPostListView, self).get_context_data(*args, **kwargs)
         user = get_object_or_404(User, username= self.kwargs.get('username'))
         context['user'] = user
-        print(user.profile.bio)
+        posts = Post.objects.all().filter(author = user)
+      
+        likes = 0
+        for p in posts:
+            likes += p.likes.count()
 
+        context['likes'] = likes
         return context
         
 

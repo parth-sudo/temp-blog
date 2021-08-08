@@ -3,10 +3,10 @@
  {% block content %} 
 
  {% if user.is_authenticated %}
-  <h2 style = "color:#dvfjrf" class="mb-3"> <strong>  Welcome, {{ user }} 🙂 </strong></h2>
+  <h2 style = "color:#dvfjrf; text-align: center;" class="mb-3"> <strong>  Welcome, {{ user }} 🙂 </strong></h2>
  {% endif %}
-  <h4 style = "color:orange", class="mb-3"> Recent Activity 👀</h4>
-  {% for post in posts %}
+  <h4 style = "color:orange; text-align:center;", class="mb-3"> Recent Activity 👀</h4>
+    {% for post in posts %}
   <article class="media content-section">
     <img
       class="rounded-circle article-img"
@@ -28,8 +28,10 @@
       <div>
         {% if user.is_authenticated %}
          <p> <strong> {{post.total_likes}} Like(s) </strong> </p>
-         <a class="btn btn-success" href="{% url 'post-detail' post.id %}"> Discuss</a>
-
+         <div style="text-align:center;">
+           <a class="btn btn-success" href="{% url 'post-detail' post.id %}"> Discuss</a>
+         </div>
+       
         {% endif %}
       </div>
 
